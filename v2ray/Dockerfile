@@ -16,6 +16,7 @@ RUN set -ex && \
     chmod +x /usr/bin/v2ray/v2ray
 ENV PATH /usr/bin/v2ray:$PATH
 COPY default.conf /etc/nginx/conf.d/default.conf
+COPY index.html /var/lib/nginx/html/index.html
 RUN adduser -D myuser && \
     mkdir /run/nginx
 RUN chmod -Rf 777 /etc/v2ray/ /var/lib/ /var/log/ /var/tmp/ /run
