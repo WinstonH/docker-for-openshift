@@ -58,11 +58,11 @@ RUN unzip /www/DirectoryLister.zip \
 && mv /www/DirectoryLister-master/* /www \
 && rm -f /www/DirectoryLister.zip/ \
 && mkdir /www/admin \
-&& mv kodexplorer4.25.zip /www/admin \
+&& mv kodexplorer*.zip /www/admin \
 && cd /www/admin \
-&& unzip kodexplorer4.25.zip \
+&& unzip kodexplorer*.zip \
 && chmod 777 -Rf /www /home /var /run /etc/php7 /etc/nginx /root \
-&& rm kodexplorer4.25.zip
+&& rm kodexplorer*.zip
 
 COPY entrypoint.sh /usr/sbin/
 WORKDIR /home/alpine
