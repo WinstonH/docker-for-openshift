@@ -8,7 +8,7 @@ RUN apk upgrade --no-cache \
     && echo '${TZ}' > /etc/timezone \
     && rm -rf /var/cache/apk/*
 # 添加nginx与php全家桶
-RUN apk add --no-cache nginx php7-fpm php7-mcrypt php7-soap php7-openssl php7-gmp php7-pdo_odbc php7-json php7-dom php7-pdo php7-zip php7-mysqli php7-sqlite3 php7-apcu php7-pdo_pgsql php7-bcmath php7-gd php7-odbc php7-pdo_mysql php7-pdo_sqlite php7-gettext php7-xmlreader php7-xmlrpc php7-bz2 php7-memcached php7-iconv php7-pdo_dblib php7-curl php7-ctype php7-mbstring \
+RUN apk add --no-cache ca-certificates nginx php7-fpm php7-mcrypt php7-soap php7-openssl php7-gmp php7-pdo_odbc php7-json php7-dom php7-pdo php7-zip php7-mysqli php7-sqlite3 php7-apcu php7-pdo_pgsql php7-bcmath php7-gd php7-odbc php7-pdo_mysql php7-pdo_sqlite php7-gettext php7-xmlreader php7-xmlrpc php7-bz2 php7-memcached php7-iconv php7-pdo_dblib php7-curl php7-ctype php7-mbstring \
     && rm -rf /var/cache/apk/*
 RUN adduser -D -g 'www' www && \
     mkdir /www && \
@@ -45,6 +45,7 @@ RUN sed -i "s|display_errors\s*=\s*Off|display_errors = ${PHP_DISPLAY_ERRORS}|i"
 # /etc/php7/php-fpm.conf
 # /etc/php7/php.ini
 ADD etc /etc
+# Cloud-torrent
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
 && apk --update --no-cache add unzip git ttf-freefont supervisor sudo openssl bash curl \
 && addgroup alpine \
@@ -62,11 +63,22 @@ RUN unzip /www/DirectoryLister.zip \
 && mv kodexplorer*.zip /www/admin \
 && cd /www/admin \
 && unzip kodexplorer*.zip \
-&& chmod 777 -Rf /www /home /var /run /etc/php7 /etc/nginx /root \
+&& chmod 777 -Rf /www /home /root /var /run /etc/php7 /etc/nginx /etc/v2ray \
 && rm kodexplorer*.zip \
 && mkdir /home/alpine/downloads \
 && ln -s /home/alpine/downloads /www/downloads
 
+# V2Ray
+ADD https://storage.googleapis.com/v2ray-docker/v2ray /usr/bin/v2ray/
+ADD https://storage.googleapis.com/v2ray-docker/v2ctl /usr/bin/v2ray/
+ADD https://storage.googleapis.com/v2ray-docker/geoip.dat /usr/bin/v2ray/
+ADD https://storage.googleapis.com/v2ray-docker/geosite.dat /usr/bin/v2ray/
+RUN set -ex && \
+    mkdir /var/log/v2ray/ && \
+    chmod +x /usr/bin/v2ray/v2ctl && \
+    chmod +x /usr/bin/v2ray/v2ray
+
+ENV PATH /usr/bin/v2ray:$PATH
 COPY entrypoint.sh /usr/sbin/
 WORKDIR /home/alpine
 USER alpine
