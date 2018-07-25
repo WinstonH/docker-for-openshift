@@ -64,9 +64,7 @@ RUN unzip /www/DirectoryLister.zip \
 && cd /www/admin \
 && unzip kodexplorer*.zip \
 && chmod 777 -Rf /www /home /root /var /run /etc/php7 /etc/nginx \
-&& rm kodexplorer*.zip \
-&& mkdir /home/alpine/downloads \
-&& ln -s /home/alpine/downloads /www/downloads
+&& rm kodexplorer*.zip
 
 # V2Ray
 ADD https://storage.googleapis.com/v2ray-docker/v2ray /usr/bin/v2ray/
@@ -78,7 +76,7 @@ RUN set -ex && \
     mkdir /var/log/v2ray/ && \
     chmod +x /usr/bin/v2ray/v2ctl && \
     chmod +x /usr/bin/v2ray/v2ray && \
-    chmod 777 -Rf /etc/v2ray/ /var
+    chmod 777 -Rf /etc/v2ray/
 ENV PATH /usr/bin/v2ray:$PATH
 COPY entrypoint.sh /usr/sbin/
 WORKDIR /home/alpine
