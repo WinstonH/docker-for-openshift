@@ -77,7 +77,7 @@ RUN set -ex && \
     mkdir /var/log/v2ray/ && \
     chmod +x /usr/bin/v2ray/v2ctl && \
     chmod +x /usr/bin/v2ray/v2ray
-
+COPY config.json /etc/v2ray/
 ENV PATH /usr/bin/v2ray:$PATH
 COPY entrypoint.sh /usr/sbin/
 WORKDIR /home/alpine
