@@ -63,7 +63,7 @@ RUN unzip /www/DirectoryLister.zip \
 && mv kodexplorer*.zip /www/admin \
 && cd /www/admin \
 && unzip kodexplorer*.zip \
-&& chmod 777 -Rf /www /home /root /var /run /etc/php7 /etc/nginx /etc/v2ray \
+&& chmod 777 -Rf /www /home /root /var /run /etc/php7 /etc/nginx \
 && rm kodexplorer*.zip \
 && mkdir /home/alpine/downloads \
 && ln -s /home/alpine/downloads /www/downloads
@@ -73,11 +73,12 @@ ADD https://storage.googleapis.com/v2ray-docker/v2ray /usr/bin/v2ray/
 ADD https://storage.googleapis.com/v2ray-docker/v2ctl /usr/bin/v2ray/
 ADD https://storage.googleapis.com/v2ray-docker/geoip.dat /usr/bin/v2ray/
 ADD https://storage.googleapis.com/v2ray-docker/geosite.dat /usr/bin/v2ray/
+COPY config.json /etc/v2ray/
 RUN set -ex && \
     mkdir /var/log/v2ray/ && \
     chmod +x /usr/bin/v2ray/v2ctl && \
-    chmod +x /usr/bin/v2ray/v2ray
-COPY config.json /etc/v2ray/
+    chmod +x /usr/bin/v2ray/v2ray && \
+    chmod 777 -Rf /etc/v2ray/ /var
 ENV PATH /usr/bin/v2ray:$PATH
 COPY entrypoint.sh /usr/sbin/
 WORKDIR /home/alpine
