@@ -14,12 +14,12 @@
         }
       ]
     },
-	"streamSettings": {
-	"network": "ws",
-    "wsSettings": {
+    "streamSettings": {
+      "network": "ws",
+      "wsSettings": {
         "path": "/openshift"
       }
-	}
+    }
   },
   "outbound": {
     "protocol": "freedom",
