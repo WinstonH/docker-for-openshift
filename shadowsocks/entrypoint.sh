@@ -6,4 +6,4 @@ mkdir /run/nginx
 nginx
 
 # ss
-ss-server -c /root/config.json
+ss-server -c /home/config.json

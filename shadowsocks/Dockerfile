@@ -51,11 +51,13 @@ RUN apk --update add --no-cache nginx \
    && make install \
    && apk del TMP \
    && rm -rf /tmp/* \
-   && rm -rf /var/cache/apk/*
+   && rm -rf /var/cache/apk/* \
+   && mkdir -p /var/tmp/nginx/client_body \
+   && chmod 777 -R /var /run /etc/nginx
 
 COPY entrypoint.sh /usr/local/bin/
 COPY default.conf /etc/nginx/conf.d/
-COPY config.json /root/
+COPY config.json /home/
 
 EXPOSE 8080
 CMD ["entrypoint.sh"]
