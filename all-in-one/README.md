@@ -1,1 +1,1 @@
-# alpine-desktop for openshift
+# Alpine-desktop for openshift
