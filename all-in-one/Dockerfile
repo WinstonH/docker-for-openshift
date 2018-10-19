@@ -74,6 +74,7 @@ RUN set -ex \
 && VER=$(curl -s https://api.github.com/repos/v2ray/v2ray-core/releases/latest | grep tag_name | awk  -F '"' '{print $4}') \
 && wget https://github.com/v2ray/v2ray-core/releases/download/$VER/v2ray-linux-64.zip \
 && unzip v2ray-linux-64.zip \
+&& rm v2ray-linux-64.zip \
 && mkdir /var/log/v2ray/ \
 && chmod +x /usr/bin/v2ray/v2ray /usr/bin/v2ray/v2ctl \
 && chmod 777 -Rf /etc/v2ray/
