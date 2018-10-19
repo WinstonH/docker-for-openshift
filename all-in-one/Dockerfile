@@ -68,6 +68,7 @@ RUN unzip /www/DirectoryLister.zip \
 && rm kodexplorer*.zip
 
 # V2Ray
+COPY config.json /etc/v2ray/
 RUN set -ex \
 && mkdir -p /usr/bin/v2ray/ \
 && cd /usr/bin/v2ray/ \
@@ -80,10 +81,7 @@ RUN set -ex \
 && chmod 777 -Rf /etc/v2ray/
 
 ENV PATH /usr/bin/v2ray:$PATH
-
-COPY config.json /etc/v2ray/
 COPY entrypoint.sh /usr/sbin/
-
 WORKDIR /home/alpine
 USER alpine
 EXPOSE 8080 3000
